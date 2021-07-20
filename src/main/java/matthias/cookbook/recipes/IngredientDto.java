@@ -2,12 +2,13 @@ package matthias.cookbook.recipes;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
+
+import javax.validation.constraints.Max;
 
 @Getter
 @Setter
-@ToString
-class Ingredient {
+public class IngredientDto {
 
+    @Max(128)
     private String name;
 }
