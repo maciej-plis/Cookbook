@@ -1,20 +1,26 @@
 package matthias.cookbook.recipes;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-import javax.validation.constraints.Max;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 public class RecipeDto {
 
-    @NotBlank
-    @Max(1020)
+    private String id;
+
+    @Size(max = 255, message = "Recipe name cannot be longer than 255 characters")
+    @NotBlank(message = "Recipe name Cannot be null or empty")
     private String name;
-    @Max(255)
+
+    @Size(max = 1020, message = "Recipe description cannot be longer than 1020 characters")
     private String description;
-    private List<IngredientDto> ingredients;
+
+    @NotEmpty(message = "Recipe ingredients cannot be empty")
+    private List<@Valid IngredientDto> ingredients = new ArrayList<>();
 }

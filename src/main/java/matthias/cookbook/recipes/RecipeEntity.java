@@ -1,22 +1,19 @@
 package matthias.cookbook.recipes;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Getter
-@Setter
-@ToString
+@Data
 @Document(collection = "recipe")
-public class RecipeEntity {
+class RecipeEntity {
 
     @Id
     private String id;
     private String name;
     private String description;
-    private List<Ingredient> ingredients;
+    private List<Ingredient> ingredients = new ArrayList<>();
 }

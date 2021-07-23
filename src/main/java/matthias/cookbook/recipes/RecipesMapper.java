@@ -4,6 +4,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
+import java.util.List;
+
 @Mapper
 interface RecipesMapper {
 
@@ -14,4 +16,6 @@ interface RecipesMapper {
 
     @Mapping(target = "id", ignore = true)
     RecipeEntity updateFromDto(@MappingTarget RecipeEntity recipe, RecipeDto recipeDto);
+
+    List<RecipeDto> toRecipesDto(List<RecipeEntity> recipes);
 }

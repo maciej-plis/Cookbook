@@ -1,14 +1,14 @@
 package matthias.cookbook.recipes;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-import javax.validation.constraints.Max;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
-@Getter
-@Setter
+@Data
 public class IngredientDto {
 
-    @Max(128)
+    @Size(max = 128, message = "Ingredient name cannot be longer than 128 characters")
+    @NotBlank(message = "Ingredient name cannot be null or empty")
     private String name;
 }

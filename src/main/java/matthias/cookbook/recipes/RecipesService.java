@@ -15,25 +15,26 @@ class RecipesService {
     private final RecipesRepository recipesRepository;
     private final RecipesMapper recipesMapper;
 
-    List<RecipeEntity> getRecipes() {
-        return recipesRepository.findAll();
+    List<RecipeDto> getRecipes() {
+        return recipesMapper.toRecipesDto(recipesRepository.findAll());
     }
 
-    RecipeEntity getRecipe(String recipeId) {
-        return getRecipeOrThrow(recipeId);
+    RecipeDto getRecipe(String recipeId) {
+        return recipesMapper.toRecipeDto(getRecipeOrThrow(recipeId));
     }
 
-    public void addRecipe(RecipeDto recipeDto) {
-        recipesRepository.insert(recipesMapper.fromRecipeDto(recipeDto));
+    RecipeDto createRecipe(RecipeDto recipeDto) {
+        RecipeEntity createdRecipe = recipesRepository.insert(recipesMapper.fromRecipeDto(recipeDto));
+        return recipesMapper.toRecipeDto(createdRecipe);
     }
 
-    public void editRecipe(String recipeId, RecipeDto recipeDto) {
+    RecipeDto updateRecipe(String recipeId, RecipeDto recipeDto) {
         RecipeEntity recipe = getRecipeOrThrow(recipeId);
-        RecipeEntity updatedRecipe = recipesMapper.updateFromDto(recipe, recipeDto);
-        recipesRepository.save(updatedRecipe);
+        RecipeEntity updatedRecipe = recipesRepository.save(recipesMapper.updateFromDto(recipe, recipeDto));
+        return recipesMapper.toRecipeDto(updatedRecipe);
     }
 
-    public void deleteRecipe(String recipeId) {
+    void deleteRecipe(String recipeId) {
         recipesRepository.deleteById(recipeId);
     }
 

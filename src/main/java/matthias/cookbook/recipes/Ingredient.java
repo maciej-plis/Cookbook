@@ -1,12 +1,8 @@
 package matthias.cookbook.recipes;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
-@Getter
-@Setter
-@ToString
+@Data
 class Ingredient {
 
     private String name;

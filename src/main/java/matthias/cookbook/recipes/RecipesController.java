@@ -3,36 +3,42 @@ package matthias.cookbook.recipes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/recipes")
-public class RecipesController {
+class RecipesController {
 
     private final RecipesService recipesService;
 
     @GetMapping
-    public List<RecipeEntity> getRecipes() {
+    public List<RecipeDto> getRecipes() {
         return recipesService.getRecipes();
     }
 
-    @PostMapping
-    public void addRecipe(@RequestBody RecipeDto recipeDto) {
-        recipesService.addRecipe(recipeDto);
-    }
-
     @GetMapping("/{recipeId}")
-    public RecipeEntity getRecipe(@PathVariable String recipeId) {
+    public RecipeDto getRecipe(@PathVariable String recipeId) {
         return recipesService.getRecipe(recipeId);
     }
 
+    @PostMapping
+    @ResponseStatus(CREATED)
+    public RecipeDto createRecipe(@RequestBody @Valid RecipeDto recipeDto) {
+        return recipesService.createRecipe(recipeDto);
+    }
+
     @PutMapping("/{recipeId}")
-    public void editRecipe(@PathVariable String recipeId, @RequestBody RecipeDto recipeDto) {
-        recipesService.editRecipe(recipeId, recipeDto);
+    public RecipeDto updateRecipe(@PathVariable String recipeId, @RequestBody @Valid RecipeDto recipeDto) {
+        return recipesService.updateRecipe(recipeId, recipeDto);
     }
 
     @DeleteMapping("/{recipeId}")
+    @ResponseStatus(NO_CONTENT)
     public void deleteRecipe(@PathVariable String recipeId) {
         recipesService.deleteRecipe(recipeId);
     }
