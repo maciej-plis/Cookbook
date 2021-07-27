@@ -2,6 +2,9 @@ package matthias.cookbook.recipes
 
 import matthias.cookbook.TestSpecification
 import matthias.cookbook.common.exceptions.EntityNotFoundException
+import matthias.cookbook.recipes.dtos.CreateOrUpdateRecipeDto
+import matthias.cookbook.recipes.dtos.IngredientDto
+import matthias.cookbook.recipes.dtos.RecipeDto
 import org.springframework.test.web.servlet.ResultActions
 import spock.lang.Unroll
 
@@ -105,9 +108,13 @@ class RecipesControllerTest extends TestSpecification {
                     ]
             ]
 
-            1 * recipesService.createRecipe(_ as RecipeDto) >> { RecipeDto recipeDto ->
-                recipeDto.id = sampleId
-                return recipeDto
+            1 * recipesService.createRecipe(_ as CreateOrUpdateRecipeDto) >> { CreateOrUpdateRecipeDto recipeDto ->
+                return new RecipeDto(
+                        id: sampleId,
+                        name: recipeDto.name,
+                        description: recipeDto.description,
+                        ingredients: recipeDto.ingredients
+                )
             }
 
         when:
@@ -167,9 +174,13 @@ class RecipesControllerTest extends TestSpecification {
                     ]
             ]
 
-            1 * recipesService.updateRecipe(sampleId, _ as RecipeDto) >> { String recipeId, RecipeDto recipeDto ->
-                recipeDto.id = recipeId
-                return recipeDto
+            1 * recipesService.updateRecipe(sampleId, _ as CreateOrUpdateRecipeDto) >> { String recipeId, CreateOrUpdateRecipeDto recipeDto ->
+                return new RecipeDto(
+                        id: recipeId,
+                        name: recipeDto.name,
+                        description: recipeDto.description,
+                        ingredients: recipeDto.ingredients
+                )
             }
 
         when:
@@ -199,7 +210,7 @@ class RecipesControllerTest extends TestSpecification {
                     ]
             ]
 
-            1 * recipesService.updateRecipe(sampleId, _ as RecipeDto) >> {
+            1 * recipesService.updateRecipe(sampleId, _ as CreateOrUpdateRecipeDto) >> {
                 throw new EntityNotFoundException("Recipe doesn't exist")
             }
 

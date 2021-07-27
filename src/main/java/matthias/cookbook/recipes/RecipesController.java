@@ -1,6 +1,8 @@
 package matthias.cookbook.recipes;
 
 import lombok.RequiredArgsConstructor;
+import matthias.cookbook.recipes.dtos.CreateOrUpdateRecipeDto;
+import matthias.cookbook.recipes.dtos.RecipeDto;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -28,12 +30,12 @@ class RecipesController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public RecipeDto createRecipe(@RequestBody @Valid RecipeDto recipeDto) {
+    public RecipeDto createRecipe(@RequestBody @Valid CreateOrUpdateRecipeDto recipeDto) {
         return recipesService.createRecipe(recipeDto);
     }
 
     @PutMapping("/{recipeId}")
-    public RecipeDto updateRecipe(@PathVariable String recipeId, @RequestBody @Valid RecipeDto recipeDto) {
+    public RecipeDto updateRecipe(@PathVariable String recipeId, @RequestBody @Valid CreateOrUpdateRecipeDto recipeDto) {
         return recipesService.updateRecipe(recipeId, recipeDto);
     }
 

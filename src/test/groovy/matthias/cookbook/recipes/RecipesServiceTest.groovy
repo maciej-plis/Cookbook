@@ -2,6 +2,9 @@ package matthias.cookbook.recipes
 
 import matthias.cookbook.TestSpecification
 import matthias.cookbook.common.exceptions.EntityNotFoundException
+import matthias.cookbook.recipes.dtos.CreateOrUpdateRecipeDto
+import matthias.cookbook.recipes.dtos.IngredientDto
+import matthias.cookbook.recipes.dtos.RecipeDto
 import spock.lang.Subject
 
 import static org.mapstruct.factory.Mappers.getMapper
@@ -98,7 +101,7 @@ class RecipesServiceTest extends TestSpecification {
 
     def "should create new recipe and return it"() {
         given:
-            RecipeDto recipeDto = new RecipeDto(
+            CreateOrUpdateRecipeDto recipeDto = new CreateOrUpdateRecipeDto(
                     name: "recipe name",
                     description: "recipe description",
                     ingredients: [
@@ -143,7 +146,7 @@ class RecipesServiceTest extends TestSpecification {
                     ]
             ))
 
-            RecipeDto recipeDto = new RecipeDto(
+            CreateOrUpdateRecipeDto recipeDto = new CreateOrUpdateRecipeDto(
                     name: "updated recipe name",
                     description: "updated recipe description",
                     ingredients: [
@@ -179,7 +182,7 @@ class RecipesServiceTest extends TestSpecification {
 
     def "should throw EntityNotFoundException when updating recipe and recipe with given id doesn't exist"() {
         given:
-            RecipeDto recipeDto = new RecipeDto(
+            CreateOrUpdateRecipeDto recipeDto = new CreateOrUpdateRecipeDto(
                     name: "updated recipe name",
                     description: "updated recipe description",
                     ingredients: [

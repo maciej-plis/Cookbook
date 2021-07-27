@@ -1,4 +1,4 @@
-package matthias.cookbook.recipes;
+package matthias.cookbook.recipes.dtos;
 
 import lombok.Data;
 
@@ -10,9 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class RecipeDto {
-
-    private String id;
+public class CreateOrUpdateRecipeDto {
 
     @Size(max = 255, message = "Recipe name cannot be longer than 255 characters")
     @NotBlank(message = "Recipe name Cannot be null or empty")

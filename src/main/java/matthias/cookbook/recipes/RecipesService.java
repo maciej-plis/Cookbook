@@ -2,6 +2,8 @@ package matthias.cookbook.recipes;
 
 import lombok.RequiredArgsConstructor;
 import matthias.cookbook.common.exceptions.EntityNotFoundException;
+import matthias.cookbook.recipes.dtos.CreateOrUpdateRecipeDto;
+import matthias.cookbook.recipes.dtos.RecipeDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,12 +25,12 @@ class RecipesService {
         return recipesMapper.toRecipeDto(getRecipeOrThrow(recipeId));
     }
 
-    RecipeDto createRecipe(RecipeDto recipeDto) {
+    RecipeDto createRecipe(CreateOrUpdateRecipeDto recipeDto) {
         RecipeEntity createdRecipe = recipesRepository.insert(recipesMapper.fromRecipeDto(recipeDto));
         return recipesMapper.toRecipeDto(createdRecipe);
     }
 
-    RecipeDto updateRecipe(String recipeId, RecipeDto recipeDto) {
+    RecipeDto updateRecipe(String recipeId, CreateOrUpdateRecipeDto recipeDto) {
         RecipeEntity recipe = getRecipeOrThrow(recipeId);
         RecipeEntity updatedRecipe = recipesRepository.save(recipesMapper.updateFromDto(recipe, recipeDto));
         return recipesMapper.toRecipeDto(updatedRecipe);

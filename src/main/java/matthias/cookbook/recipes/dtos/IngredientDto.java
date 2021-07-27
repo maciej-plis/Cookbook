@@ -1,4 +1,4 @@
-package matthias.cookbook.recipes;
+package matthias.cookbook.recipes.dtos;
 
 import lombok.Data;
 
