@@ -1,0 +1,43 @@
+pipeline {
+    agent {
+        node {
+            label 'master'
+        }
+    }
+
+    tools {
+        jdk 'openjdk-16'
+    }
+
+    stages {
+        stage ('clone repo') {
+            steps {
+                echo 'Cloning repo..'
+                git (
+                    url: 'https://github.com/maciejplis/Cookbook',
+                    credentialsId: 'f3198813-2883-44fc-a2c2-61329c1f514f',
+                    branch: '${BRANCH}'
+                )
+                sh 'chmod 755 ./gradlew'
+            }
+        }
+        stage ('unit tests') {
+            steps {
+                echo 'Running unit tests..'
+                sh './gradlew test'
+            }
+        }
+        stage ('integration tests') {
+            steps {
+                echo 'Running integration tests..'
+                sh './gradlew integrationTest'
+            }
+        }
+        stage ('sonar quality check') {
+            steps {
+                echo 'Running sonarqube quality check..'
+                sh './gradlew sonarqube'
+            }
+        }
+    }
+}
