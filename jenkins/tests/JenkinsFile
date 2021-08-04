@@ -1,0 +1,25 @@
+pipeline {
+    agent {
+        node {
+            label 'master'
+        }
+    }
+
+    stages {
+        stage('clone repo') {
+            steps {
+                echo 'Cloning repo..'
+            }
+        }
+        stage('unit tests') {
+            steps {
+                echo 'Running unit tests..'
+            }
+        }
+        stage('integration tests') {
+            steps {
+                echo 'Running integration tests..'
+            }
+        }
+    }
+}
